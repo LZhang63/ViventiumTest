@@ -1,0 +1,36 @@
+﻿You're given a test data (DATA.csv) from multiple companies. Design a data store an expose a RESTful API as described below.
+The following technologies should be used in the process:
+	* ASP.NET WebAPI
+	* EntityFramework
+We accept a git repository (github, bitbucket, etc) with the code.
+NOTE: You can use any additional libraries you need
+
+
+API Endpoints:
+
+POST /DataStore 
+	* Accepts the CSV data and replaces (clears and imports) the data in the store with the provided one. 
+
+GET /Companies
+	* Returns the list of CompanyHeader objects
+	
+GET /Companies/{id}
+	* Returns the Company object by provided ID
+
+
+Data Transfer Objects:	
+
+CompanyHeader 
+	Id, // CompanyId
+	Code, // CompanyCode
+	Description, // CompanyDescription
+	EmployeeCount // Number of Employees in the given company
+	
+Company : CompanyHeader
+	EmployeeHeader[] Employees // List of EmployeeHeader objects in the given company
+	
+EmployeeHeader
+	Id,
+    FullName // "{FirstName} {LastName}"
+	
+	
