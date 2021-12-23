@@ -9,7 +9,7 @@ namespace ViventiumTest.Models
     /// </summary>
     public class EmployeeWrapper
     {
-        public Employee? EmployeeHeader {get; set;}
+        public Employee EmployeeHeader { get; set; } = null!;
     }
 
     public class Employee
@@ -33,5 +33,7 @@ namespace ViventiumTest.Models
         [JsonIgnore]
         public Company? Company { get; set; }
 
+        [JsonIgnore]
+        public uint CompanyId { get; set; }
     }
 }

@@ -13,11 +13,24 @@ namespace ViventiumTest.Models
         public Company CompanyHeader { get; set; } = null!;
     }
 
+    
     /// <summary>
     /// Company Model
     /// </summary>
     public class Company
     {
+        public Company()
+        {
+
+        }
+        public Company(Company company)
+        {
+            this.CompanyId = company.CompanyId;
+            this.CompanyCode = company.CompanyCode;
+            this.CompanyDescription = company.CompanyDescription;
+            this.Employees = company.Employees;
+        }
+
         [Key]
         [JsonPropertyName("Id")]
         public uint CompanyId { get; set; }
@@ -27,15 +40,9 @@ namespace ViventiumTest.Models
         
         [JsonPropertyName("Description")]
         public string? CompanyDescription { get; set; }
-        
+
+        [JsonPropertyName("EmployeeCount")]
         public int EmployeeCount => this.Employees.Count();
-        
-        /// <summary>
-        /// Use this view to wrap Employee records in order to get desired root element name in JSON
-        /// </summary>
-        [NotMapped]
-        [JsonPropertyName("Employees")]
-        public IEnumerable<EmployeeWrapper>? Emp => this.Employees.Select(e => new EmployeeWrapper { EmployeeHeader = e });
 
         [JsonIgnore]
         public List<Employee> Employees { get; set; } = new List<Employee>();
@@ -43,5 +50,4 @@ namespace ViventiumTest.Models
         public void SortEmployees() => this.Employees.Sort((x, y) => x.EmployeeId.CompareTo(y.EmployeeId));
     }
 
-    
 }

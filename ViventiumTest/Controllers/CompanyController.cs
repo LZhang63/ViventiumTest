@@ -16,15 +16,10 @@ namespace ViventiumTest.Controllers
         [Route(EndPoints.CompanyController.GetAllCompanies)]
         public async Task<ActionResult<IEnumerable<CompanyWrapper>>> GetAllCompanies()
         {
-            //Get company list with employees included
             List<CompanyWrapper> companyList = await _dbContext.Companies
                 .Include(r=>r.Employees)
                 .Select(r => new CompanyWrapper { CompanyHeader = r })
                 .ToListAsync();
-
-            //---------Sortings are not required!!!!-----------------
-            //Sort employee list for each company
-            companyList.ForEach(c => c.CompanyHeader.SortEmployees());
             
             //Sort company list
             companyList.Sort((x, y) => x.CompanyHeader.CompanyId.CompareTo(y.CompanyHeader.CompanyId));
@@ -34,7 +29,7 @@ namespace ViventiumTest.Controllers
 
         [HttpGet]
         [Route(EndPoints.CompanyController.GetCompany)]
-        public async Task<ActionResult<CompanyWrapper>> GetCompany(uint id)
+        public async Task<ActionResult<CompanyWithEmployeesWrapper>> GetCompany(uint id)
         {
             Company? company = await this._dbContext.Companies.Include(c => c.Employees)
                 .FirstOrDefaultAsync(c => c.CompanyId == id);
@@ -45,7 +40,8 @@ namespace ViventiumTest.Controllers
             }
             //----Sorting is not required---------
             company.SortEmployees();
-            return  new CompanyWrapper() { CompanyHeader = company };
+            return  new CompanyWithEmployeesWrapper() { CompanyHeader = new CompanyWithEmployees(  company) };
+            
         }
 
 
