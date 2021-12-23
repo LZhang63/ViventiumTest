@@ -5,7 +5,7 @@ namespace ViventiumTest.Models
 {
     public class CompanyWithEmployeesWrapper
     {
-        public CompanyWithEmployees CompanyHeader { get; set; } = null!;
+        public CompanyWithEmployees Company { get; set; } = null!;
     }
 
     public class CompanyWithEmployees : Company
