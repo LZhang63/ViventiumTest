@@ -121,7 +121,7 @@ namespace ViventiumTest.Controllers.Tests
 
             //Get getting individual company. Case 1, getting an existing company
             CompanyWithEmployeesWrapper company = controller.GetCompany(1).Result.Value!;
-            Assert.AreEqual((uint)1, company.CompanyHeader.CompanyId, "Company 1 should exist being retrieved correctly");
+            Assert.AreEqual((uint)1, company.Company.CompanyId, "Company 1 should exist being retrieved correctly");
 
             //Get getting individual company. Case 2, getting a company that does not exist
             ActionResult companyDoesNotExist = controller.GetCompany(10).Result.Result!;

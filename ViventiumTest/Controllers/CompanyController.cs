@@ -40,7 +40,7 @@ namespace ViventiumTest.Controllers
             }
             //----Sorting is not required---------
             company.SortEmployees();
-            return  new CompanyWithEmployeesWrapper() { CompanyHeader = new CompanyWithEmployees(  company) };
+            return  new CompanyWithEmployeesWrapper() { Company = new CompanyWithEmployees(  company) };
             
         }
 
