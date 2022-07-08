@@ -1,9 +1,32 @@
 ﻿using Microsoft.EntityFrameworkCore;
+using System.ComponentModel.DataAnnotations;
 using System.Data.Entity.Infrastructure;
+using System.Text.Json.Serialization;
 using ViventiumTest.Helpers;
 
 namespace ViventiumTest.Models
 {
+    public class Company2
+    {
+        public Company2()
+        {
+
+        }
+       
+        [Key]
+        [JsonPropertyName("Id")]
+        public uint CompanyId { get; set; }
+
+        [JsonPropertyName("Code")]
+        public string? CompanyCode { get; set; }
+
+        [JsonPropertyName("Description")]
+        public string? CompanyDescription { get; set; }
+
+        [JsonPropertyName("EmployeeCount")]
+        public int EmployeeCount { get; init; }
+
+    }
     public class ViventiumTestDbContext:DbContext
     {
         public ViventiumTestDbContext(DbContextOptions<ViventiumTestDbContext> options)
@@ -26,7 +49,8 @@ namespace ViventiumTest.Models
 
         public DbSet<Company> Companies { get; set; } = null!;
         public DbSet<Employee> Employees { get; set; } = null!;
-
+        public DbSet<Company2> v_company { get; set; } = null!;
+        public DbSet<TestDbFirst> TestDbFirst { get; set; } = null!;
 
         /// <summary>
         /// Replace all records of Companies with records loaded from CSV file

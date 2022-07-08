@@ -16,14 +16,21 @@ namespace ViventiumTest.Controllers
         [Route(EndPoints.CompanyController.GetAllCompanies)]
         public async Task<ActionResult<IEnumerable<CompanyWrapper>>> GetAllCompanies()
         {
+            var vg = _dbContext.v_company;
+            
+            var c = _dbContext.Companies.ToArray();
+            var e = _dbContext.Employees.ToArray();
+
+            var r = c.GroupJoin(e, c => c.CompanyId, emp => emp.CompanyId, (c, emp) => c).ToArray();
+
+            var v = _dbContext.Companies
+                .GroupJoin(_dbContext.Employees, c => c.CompanyId, e => e.CompanyId, (c, e) => new { C = c }).ToArray();
+
             List<CompanyWrapper> companyList = await _dbContext.Companies
                 .Include(r=>r.Employees)
                 .Select(r => new CompanyWrapper { CompanyHeader = r })
                 .ToListAsync();
-            
-            //Sort company list
-            companyList.Sort((x, y) => x.CompanyHeader.CompanyId.CompareTo(y.CompanyHeader.CompanyId));
-
+         
             return companyList;
         }
 
